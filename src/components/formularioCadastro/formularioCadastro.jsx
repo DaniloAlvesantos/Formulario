@@ -1,32 +1,32 @@
 import { Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DadosDeEntrega from "./dadosDeEntrega";
 import DadosPessoais from "./dadosPessoais";
 import DadodsUsuario from "./dadosUsuario";
 
 function FormularioCadastro({aoEnviar,ValidarCPF}) {
   const [etapaAtual,setEtapa] = useState(0)
+  const [dadosColetados,setDadosColetados] = useState({})
+  useEffect(() => {
+    console.log(dadosColetados)
+  })
+  const formulario = [
+    <DadodsUsuario aoEnviar={coletarDados} />,
+    <DadosPessoais aoEnviar={coletarDados} ValidarCPF={ValidarCPF} />,
+    <DadosDeEntrega aoEnviar={coletarDados} />
+  ]
+
+  function coletarDados(dados){
+    setDadosColetados({...dadosColetados , ...dados});
+    proximoEtapa();
+  }
 
   function proximoEtapa(){
     setEtapa(etapaAtual + 1);
   }
-  
-  function formularioAtual(etapa){
-  switch(etapa){
-    case 0 :
-      return <DadodsUsuario aoEnviar={proximoEtapa} />
-    case 1:
-      return <DadosPessoais aoEnviar={proximoEtapa} ValidarCPF={ValidarCPF} />
-    case 2: 
-      return <DadosDeEntrega aoEnviar={aoEnviar} />
-    default:
-      return <Typography>Erro ao Selecionar Formulario</Typography>  
-  }
-}
-
   return (
     <>
-      {formularioAtual(etapaAtual)}
+      {formulario[etapaAtual]}
     </>
   );
 }

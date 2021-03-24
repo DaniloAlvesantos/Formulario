@@ -1,10 +1,22 @@
 import { TextField,Button } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 
-export default function DadosDeEntrega() {
+export default function DadosDeEntrega({ aoEnviar }) {
+  const [cep,setCep] = useState('');
+  const [Num,setNum] = useState('');
+  const [endereco,setEndereco] = useState('');
+  const [estado,setStado] = useState('');
+  const [cidade,setCidade] = useState('');
   return (
-    <form>
+    <form onSubmit={(e) => {
+      e.preventDefault();
+      aoEnviar({cep,Num,endereco,estado,cidade});
+    }} >
       <TextField
+        value={cep}
+        onChange={(e) => {
+          setCep(e.target.value)
+        }}
         id="Cep"
         variant="outlined"
         margin="normal"
@@ -13,6 +25,10 @@ export default function DadosDeEntrega() {
         type="number"
       />
       <TextField
+        value={Num}
+        onChange={(e) => {
+          setNum(e.target.value)
+        }}
         required
         id="numero"
         variant="outlined"
@@ -21,8 +37,12 @@ export default function DadosDeEntrega() {
         type="number"
       />
         <TextField
+          value={endereco}
+          onChange={(e) => {
+            setEndereco(e.target.value)
+          }}
           required
-          id="endereço"
+          id="endereco"
           variant="outlined"
           margin="normal"
           fullWidth
@@ -30,6 +50,10 @@ export default function DadosDeEntrega() {
           type="text"
         />
       <TextField
+        value={estado}
+        onChange={(e) => {
+          setStado(e.target.value)
+        }}
         id="Estado"
         variant="outlined"
         margin="normal"
@@ -39,6 +63,10 @@ export default function DadosDeEntrega() {
         required
       />
       <TextField
+        value={cidade}
+        onChange={(e) => {
+          setCidade(e.target.value)
+        }}
         required
         id="Cidade"
         variant="outlined"
